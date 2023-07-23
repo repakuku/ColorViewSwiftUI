@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    enum TextField {
+    private enum TextField {
         case redTextField
         case greenTextField
         case blueTextField
@@ -60,47 +60,28 @@ struct ContentView: View {
     }
     
     private func switchTextField(up: Bool) {
-        if up {
-            switch focusedTextField {
-            case .none:
-                break
-            case .redTextField:
-                focusedTextField = .blueTextField
-            case .greenTextField:
-                focusedTextField = .redTextField
-            case .blueTextField:
-                focusedTextField = .greenTextField
-            }
-        } else {
-            switch focusedTextField {
-            case .none:
-                break
-            case .redTextField:
-                focusedTextField = .greenTextField
-            case .greenTextField:
-                focusedTextField = .blueTextField
-            case .blueTextField:
-                focusedTextField = .redTextField
-            }
-        }
-    }
-    
-    private func checkValue() {
-        var value = 0.0
-        
         switch focusedTextField {
         case .none:
             break
         case .redTextField:
-            value = redSliderValue
+            focusedTextField = up ? .blueTextField : .greenTextField
         case .greenTextField:
-            value = greenSliderValue
+            focusedTextField = up ? .redTextField : .blueTextField
         case .blueTextField:
-            value = blueSliderValue
+            focusedTextField = up ? .greenTextField : .redTextField
         }
-        
-        if !(0...255).contains(value) {
-            alertPresented = true
+    }
+    
+    private func checkValue() {
+        switch focusedTextField {
+        case .none:
+            break
+        case .redTextField:
+            break
+        case .greenTextField:
+            break
+        case .blueTextField:
+            break
         }
     }
 }
