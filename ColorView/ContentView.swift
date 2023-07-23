@@ -44,11 +44,15 @@ struct ContentView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
-                Button("Up") {
+                Button {
                     switchTextField(up: true)
+                } label: {
+                    Image(systemName: "chevron.up")
                 }
-                Button("Down") {
+                Button {
                     switchTextField(up: false)
+                } label: {
+                    Image(systemName: "chevron.down")
                 }
                 
                 Spacer()
