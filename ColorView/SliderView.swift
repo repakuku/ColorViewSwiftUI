@@ -21,6 +21,9 @@ struct SliderView: View {
             Slider(value: $sliderValue, in: 0...255, step: 1)
                 .tint(tintColor)
                 .animation(.default, value: sliderValue)
+                .onChange(of: sliderValue) { newValue in
+                    textFieldValue = sliderValue
+                }
             TextField("", value: $textFieldValue, formatter: NumberFormatter())
                 .multilineTextAlignment(.trailing)
                 .padding(.trailing, 5)
@@ -28,9 +31,6 @@ struct SliderView: View {
                 .background(.white)
                 .cornerRadius(4)
                 .keyboardType(.numberPad)
-                .onChange(of: sliderValue) { newValue in
-                    textFieldValue = sliderValue
-                }
         }
     }
 }

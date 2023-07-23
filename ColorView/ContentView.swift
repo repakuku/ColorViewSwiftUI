@@ -54,7 +54,7 @@ struct ContentView: View {
                 Spacer()
                 Button("Done") {
                     focusedTextField = nil
-                    checkValue()
+                    setValue()
                 }
                 .alert("Wrong Format", isPresented: $alertPresented, actions: {}) {
                     Text("Please enter value from 0 to 255")
@@ -76,28 +76,26 @@ struct ContentView: View {
         }
     }
     
-    private func checkValue() {
+    private func setValue() {
         switch focusedTextField {
         case .none:
             break
         case .redTextField:
-            if redTextFieldValue > 255 {
-                alertPresented = true
-                redTextFieldValue = 255
-            }
+            check(&redTextFieldValue)
             redSliderValue = redTextFieldValue
         case .greenTextField:
-            if greenTextFieldValue > 255 {
-                alertPresented = true
-                greenTextFieldValue = 255
-            }
+            check(&greenTextFieldValue)
             greenSliderValue = greenTextFieldValue
         case .blueTextField:
-            if blueTextFieldValue > 255 {
-                alertPresented = true
-                blueTextFieldValue = 255
-            }
+            check(&blueTextFieldValue)
             blueSliderValue = blueTextFieldValue
+        }
+    }
+    
+    private func check(_ value: inout Double) {
+        if value > 255 {
+            alertPresented.toggle()
+            value = 255
         }
     }
 }
