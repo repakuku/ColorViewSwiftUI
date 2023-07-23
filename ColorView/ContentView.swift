@@ -8,19 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
-    private enum TextField {
+    private enum ColorTextField {
         case redTextField
         case greenTextField
         case blueTextField
     }
     
-    @State private var redSliderValue = Double.random(in: 0...255)
-    @State private var greenSliderValue = Double.random(in: 0...255)
-    @State private var blueSliderValue = Double.random(in: 0...255)
+    @State private var redSliderValue = 100.0
+    @State private var greenSliderValue = 100.0
+    @State private var blueSliderValue = 100.0
+    
+    @State private var redTextFieldValue = 100.0
+    @State private var greenTextFieldValue = 100.0
+    @State private var blueTextFieldValue = 100.0
     
     @State private var alertPresented = false
     
-    @FocusState private var focusedTextField: TextField?
+    @FocusState private var focusedTextField: ColorTextField?
     
     var body: some View {
         ZStack {
@@ -28,11 +32,11 @@ struct ContentView: View {
                 .ignoresSafeArea()
             VStack(spacing: 20) {
                 ColorView(redValue: $redSliderValue, greenValue: $greenSliderValue, blueValue: $blueSliderValue)
-                SliderView(value: $redSliderValue, tintColor: .red)
+                SliderView(sliderValue: $redSliderValue, textFieldValue: $redTextFieldValue, tintColor: .red)
                     .focused($focusedTextField, equals: .redTextField)
-                SliderView(value: $greenSliderValue, tintColor: .green)
+                SliderView(sliderValue: $greenSliderValue, textFieldValue: $greenTextFieldValue, tintColor: .green)
                     .focused($focusedTextField, equals: .greenTextField)
-                SliderView(value: $blueSliderValue, tintColor: .blue)
+                SliderView(sliderValue: $blueSliderValue, textFieldValue: $blueTextFieldValue, tintColor: .blue)
                     .focused($focusedTextField, equals: .blueTextField)
                 Spacer()
             }
@@ -77,11 +81,23 @@ struct ContentView: View {
         case .none:
             break
         case .redTextField:
-            break
+            if redTextFieldValue > 255 {
+                alertPresented = true
+                redTextFieldValue = 255
+            }
+            redSliderValue = redTextFieldValue
         case .greenTextField:
-            break
+            if greenTextFieldValue > 255 {
+                alertPresented = true
+                greenTextFieldValue = 255
+            }
+            greenSliderValue = greenTextFieldValue
         case .blueTextField:
-            break
+            if blueTextFieldValue > 255 {
+                alertPresented = true
+                blueTextFieldValue = 255
+            }
+            blueSliderValue = blueTextFieldValue
         }
     }
 }
