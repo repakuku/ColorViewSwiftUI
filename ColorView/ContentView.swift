@@ -14,11 +14,9 @@ struct ContentView: View {
         case blueTextField
     }
     
-    @State private var redValue = Double.random(in: 0...255)
-    @State private var greenValue = Double.random(in: 0...255)
-    @State private var blueValue = Double.random(in: 0...255)
-    
-    @State private var alertPresented = false
+    @State private var redValue = Double.random(in: 0...255).rounded()
+    @State private var greenValue = Double.random(in: 0...255).rounded()
+    @State private var blueValue = Double.random(in: 0...255).rounded()
     
     @FocusState private var focusedTextField: ColorTextField?
     

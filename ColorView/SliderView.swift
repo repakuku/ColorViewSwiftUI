@@ -36,7 +36,7 @@ struct SliderView: View {
                 .cornerRadius(4)
                 .keyboardType(.numberPad)
                 .onAppear {
-                    text = value.rounded().formatted()
+                    text = value.formatted()
                 }
                 .alert("Wrong Format", isPresented: $alertPresented, actions: {}) {
                     Text("Please enter value from 0 to 255")
