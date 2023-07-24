@@ -11,10 +11,14 @@ struct ColorView: View {
     let redValue: Double
     let greenValue: Double
     let blueValue: Double
+    let frameColor: Color
     
     var body: some View {
         Color(red: redValue / 255, green: greenValue / 255, blue: blueValue / 255)
             .rounded()
+            .overlay(RoundedRectangle(cornerRadius: 10)
+                .stroke(frameColor, lineWidth: 4)
+            )
     }
 }
 
@@ -23,7 +27,7 @@ struct ColorView_Previews: PreviewProvider {
         ZStack {
             Color(.systemCyan)
                 .ignoresSafeArea()
-            ColorView(redValue: 150, greenValue: 10, blueValue: 10)
+            ColorView(redValue: 150, greenValue: 10, blueValue: 10, frameColor: .white)
         }
     }
 }
