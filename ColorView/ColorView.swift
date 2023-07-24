@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ColorView: View {
-    let redValue: Double
-    let greenValue: Double
-    let blueValue: Double
+    let red: Double
+    let green: Double
+    let blue: Double
     
     var body: some View {
-        Color(red: redValue / 255, green: greenValue / 255, blue: blueValue / 255)
+        Color(red: red / 255, green: green / 255, blue: blue / 255)
             .rounded()
     }
 }
@@ -23,7 +23,7 @@ struct ColorView_Previews: PreviewProvider {
         ZStack {
             Color(.systemCyan)
                 .ignoresSafeArea()
-            ColorView(redValue: 150, greenValue: 10, blueValue: 10)
+            ColorView(red: 150, green: 10, blue: 10)
         }
     }
 }

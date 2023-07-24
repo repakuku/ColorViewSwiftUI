@@ -8,33 +8,26 @@
 import SwiftUI
 
 struct SliderView: View {
+    
     @Binding var value: Double
-    
-    let tintColor: Color
-    
     @State private var text = ""
     @State private var alertPresented = false
+    
+    let color: Color
     
     var body: some View {
         HStack {
             Text("\(lround(value))")
                 .foregroundColor(.white)
                 .frame(width: 35, alignment: .leading)
+            
             Slider(value: $value, in: 0...255, step: 1)
-                .tint(tintColor)
-                .animation(.default, value: value)
+                .tint(color)
                 .onChange(of: value) { newValue in
                     text = newValue.formatted()
                 }
-            TextField("", text: $text) { _ in
-                checkValue()
-            }
-                .multilineTextAlignment(.trailing)
-                .padding(.trailing, 5)
-                .frame(width: 50, height: 30)
-                .background(.white)
-                .cornerRadius(4)
-                .keyboardType(.numberPad)
+            
+            TextFieldView(text: $text, action: checkValue)
                 .onAppear {
                     text = value.formatted()
                 }
@@ -61,7 +54,7 @@ struct SliderView_Previews: PreviewProvider {
         ZStack {
             Color(.systemCyan)
                 .ignoresSafeArea()
-            SliderView(value: .constant(150), tintColor: .red)
+            SliderView(value: .constant(150), color: .red)
         }
     }
 }

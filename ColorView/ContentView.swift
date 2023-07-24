@@ -14,9 +14,9 @@ struct ContentView: View {
         case blueTextField
     }
     
-    @State private var redValue = Double.random(in: 0...255).rounded()
-    @State private var greenValue = Double.random(in: 0...255).rounded()
-    @State private var blueValue = Double.random(in: 0...255).rounded()
+    @State private var red = Double.random(in: 0...255).rounded()
+    @State private var green = Double.random(in: 0...255).rounded()
+    @State private var blue = Double.random(in: 0...255).rounded()
     
     @FocusState private var focusedTextField: ColorTextField?
     
@@ -25,13 +25,15 @@ struct ContentView: View {
             Color(UIColor.systemCyan)
                 .ignoresSafeArea()
             VStack(spacing: 20) {
-                ColorView(redValue: redValue, greenValue: greenValue, blueValue: blueValue)
-                SliderView(value: $redValue, tintColor: .red)
+                ColorView(red: red, green: green, blue: blue)
+                
+                SliderView(value: $red, color: .red)
                     .focused($focusedTextField, equals: .redTextField)
-                SliderView(value: $greenValue, tintColor: .green)
+                SliderView(value: $green, color: .green)
                     .focused($focusedTextField, equals: .greenTextField)
-                SliderView(value: $blueValue, tintColor: .blue)
+                SliderView(value: $blue, color: .blue)
                     .focused($focusedTextField, equals: .blueTextField)
+                
                 Spacer()
             }
             .padding()
@@ -85,8 +87,9 @@ struct RoundedViewModifier: ViewModifier {
         content
             .frame(height: 150)
             .cornerRadius(10)
-            .overlay(RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.white, lineWidth: 4)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.white, lineWidth: 4)
             )
     }
 }
