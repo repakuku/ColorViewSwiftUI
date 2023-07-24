@@ -14,13 +14,9 @@ struct ContentView: View {
         case blueTextField
     }
     
-    @State private var redSliderValue = 100.0
-    @State private var greenSliderValue = 100.0
-    @State private var blueSliderValue = 100.0
-    
-    @State private var redTextFieldValue = 100.0
-    @State private var greenTextFieldValue = 100.0
-    @State private var blueTextFieldValue = 100.0
+    @State private var redValue = Double.random(in: 0...255)
+    @State private var greenValue = Double.random(in: 0...255)
+    @State private var blueValue = Double.random(in: 0...255)
     
     @State private var alertPresented = false
     
@@ -31,12 +27,12 @@ struct ContentView: View {
             Color(UIColor.systemCyan)
                 .ignoresSafeArea()
             VStack(spacing: 20) {
-                ColorView(redValue: $redSliderValue, greenValue: $greenSliderValue, blueValue: $blueSliderValue)
-                SliderView(sliderValue: $redSliderValue, textFieldValue: $redTextFieldValue, tintColor: .red)
+                ColorView(redValue: redValue, greenValue: greenValue, blueValue: blueValue)
+                SliderView(value: $redValue, tintColor: .red)
                     .focused($focusedTextField, equals: .redTextField)
-                SliderView(sliderValue: $greenSliderValue, textFieldValue: $greenTextFieldValue, tintColor: .green)
+                SliderView(value: $greenValue, tintColor: .green)
                     .focused($focusedTextField, equals: .greenTextField)
-                SliderView(sliderValue: $blueSliderValue, textFieldValue: $blueTextFieldValue, tintColor: .blue)
+                SliderView(value: $blueValue, tintColor: .blue)
                     .focused($focusedTextField, equals: .blueTextField)
                 Spacer()
             }
@@ -58,12 +54,11 @@ struct ContentView: View {
                 Spacer()
                 Button("Done") {
                     focusedTextField = nil
-                    setValue()
-                }
-                .alert("Wrong Format", isPresented: $alertPresented, actions: {}) {
-                    Text("Please enter value from 0 to 255")
                 }
             }
+        }
+        .onTapGesture {
+            focusedTextField = nil
         }
     }
     
@@ -77,29 +72,6 @@ struct ContentView: View {
             focusedTextField = up ? .redTextField : .blueTextField
         case .blueTextField:
             focusedTextField = up ? .greenTextField : .redTextField
-        }
-    }
-    
-    private func setValue() {
-        switch focusedTextField {
-        case .none:
-            break
-        case .redTextField:
-            check(&redTextFieldValue)
-            redSliderValue = redTextFieldValue
-        case .greenTextField:
-            check(&greenTextFieldValue)
-            greenSliderValue = greenTextFieldValue
-        case .blueTextField:
-            check(&blueTextFieldValue)
-            blueSliderValue = blueTextFieldValue
-        }
-    }
-    
-    private func check(_ value: inout Double) {
-        if value > 255 {
-            alertPresented.toggle()
-            value = 255
         }
     }
 }
