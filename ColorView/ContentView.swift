@@ -20,13 +20,26 @@ struct ContentView: View {
     
     @FocusState private var focusedTextField: ColorTextField?
     
+    var frameColorValue: Double {
+        let average = (red + green + blue) / 3
+        return 1 - average / 255
+    }
+    
     var body: some View {
         ZStack {
             Color(UIColor.systemCyan)
                 .ignoresSafeArea()
             VStack(spacing: 20) {
-                ColorView(red: red, green: green, blue: blue)
-                
+                ColorView(
+                    red: red,
+                    green: green,
+                    blue: blue,
+                    frameColor: Color(
+                        red: frameColorValue,
+                        green: frameColorValue,
+                        blue: frameColorValue
+                    )
+                )
                 SliderView(value: $red, color: .red)
                     .focused($focusedTextField, equals: .redTextField)
                 SliderView(value: $green, color: .green)
@@ -87,10 +100,6 @@ struct RoundedViewModifier: ViewModifier {
         content
             .frame(height: 150)
             .cornerRadius(10)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.white, lineWidth: 4)
-            )
     }
 }
 

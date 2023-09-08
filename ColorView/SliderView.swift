@@ -40,10 +40,14 @@ struct SliderView: View {
     private func checkValue() {
         if let value = Double(text), (0...255).contains(value) {
             self.value = value
+            if text.first == "0" && text.count > 1 {
+                text.removeFirst()
+                checkValue()
+            }
         } else {
             alertPresented.toggle()
             value = 0
-            text = "0"
+            text = value.formatted()
         }
         
     }
