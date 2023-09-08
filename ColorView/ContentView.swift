@@ -24,7 +24,7 @@ struct ContentView: View {
     
     var frameColorValue: Double {
         let average = (redValue + greenValue + blueValue) / 3
-        return average / 255
+        return 1 - average / 255
     }
     
     var body: some View {
@@ -32,7 +32,16 @@ struct ContentView: View {
             Color(UIColor.systemCyan)
                 .ignoresSafeArea()
             VStack(spacing: 20) {
-                ColorView(redValue: redValue, greenValue: greenValue, blueValue: blueValue, frameColor: Color(red: frameColorValue, green: frameColorValue, blue: frameColorValue))
+                ColorView(
+                    redValue: redValue,
+                    greenValue: greenValue,
+                    blueValue: blueValue,
+                    frameColor: Color(
+                        red: frameColorValue,
+                        green: frameColorValue,
+                        blue: frameColorValue
+                    )
+                )
                 SliderView(value: $redValue, tintColor: .red)
                     .focused($focusedTextField, equals: .redTextField)
                 SliderView(value: $greenValue, tintColor: .green)
