@@ -69,6 +69,14 @@ struct ContentView: View {
             focusedTextField = nil
         }
     }
+}
+
+extension ContentView {
+    private enum ColorTextField {
+        case redTextField
+        case greenTextField
+        case blueTextField
+    }
     
     private func switchTextField(up: Bool) {
         switch focusedTextField {
@@ -81,14 +89,6 @@ struct ContentView: View {
         case .blueTextField:
             focusedTextField = up ? .greenTextField : .redTextField
         }
-    }
-}
-
-extension ContentView {
-    private enum ColorTextField {
-        case redTextField
-        case greenTextField
-        case blueTextField
     }
 }
 
